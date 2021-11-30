@@ -3,7 +3,7 @@ import {useRef, Suspense, useState} from 'react';
 import './App.scss';
 import {Canvas} from '@react-three/fiber';
 import {useGLTF} from '@react-three/drei';
-import {useSpring, animated} from 'react-spring';
+import {useSpring, animated} from '@react-spring/three';
 
 const CaseBox = ({position, args, color}) => {
   const meshRef = useRef();
@@ -33,7 +33,7 @@ const KeyCap = () => {
   const [hovered, setHovered] = useState(false);
   const [active, setActive] = useState(false);
   const props = useSpring({
-    position: active ? [0,0,4]:[0,0,0],
+    position: active ? [0,4,0]:[0,0,0],
     color: hovered ? "red": "blue"
   });
 
@@ -65,7 +65,7 @@ function App() {
       <Canvas
         colorManagement
         shadows
-        camera={{position: [-5, 2, 10], fov: 60}}
+        camera={{position: [-5, 10, 10], fov: 60}}
       >
         <ambientLight intensity={0.3}/>
         <pointLight position={[-10,0,-20]} intensity={0.5}/>
@@ -86,7 +86,7 @@ function App() {
         <group>
           <mesh receiveShadow rotation={[-Math.PI/2,0,0]} position={[0,-3,0]}>
             <planeBufferGeometry attach='geometry' args={[100,100]}/>
-            <shadowMaterial attach='material'opacity={0.3}/>
+            <shadowMaterial attach='material' opacity={0.3}/>
           </mesh>
         </group>
 
