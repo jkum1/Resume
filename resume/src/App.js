@@ -1,62 +1,9 @@
 import React from 'react';
-import {useRef, Suspense, useState} from 'react';
+import {useRef, Suspense} from 'react';
 import './App.scss';
 import {Canvas} from '@react-three/fiber';
-import {useGLTF} from '@react-three/drei';
-import {useSpring, animated} from '@react-spring/three';
-
-const CaseBox = ({position, args, color}) => {
-  const meshRef = useRef();
-  return (
-    <group>
-      <mesh
-        castShadow
-        position={position}
-        ref={meshRef}
-      >
-        <boxBufferGeometry
-          attach='geometry'
-          args={args}
-        />
-        <animated.meshStandardMaterial
-          attach='material'
-          color={color}
-        />
-      </mesh>
-    </group>
-  );
-}
-
-const KeyCap = () => {
-  const keyRef = useRef();
-  const gltf = useGLTF('/keyCap.gltf', true);
-  const [hovered, setHovered] = useState(false);
-  const [active, setActive] = useState(false);
-  const props = useSpring({
-    position: active ? [0,4,0]:[0,0,0],
-    color: hovered ? "red": "blue"
-  });
-
-  return (
-    <group>
-      <animated.mesh
-        position={props.position}
-        scale={[50,50,50]}
-        ref={keyRef}
-        onPointerOver={() => setHovered(true)}
-        onPointerOut={() => setHovered(false)}
-        onClick={() => setActive(!active)}
-        castShadow
-      >
-        <primitive object={gltf.scene} geometry='geometry'/>
-        <animated.meshPhysicalMaterial
-          attach="material"
-          color={props.color}
-        />
-      </animated.mesh>
-    </group>
-  );
-}
+import KeyCap from './KeyCap';
+import {animated} from '@react-spring/three';
 
 function App() {
 
@@ -90,12 +37,9 @@ function App() {
           </mesh>
         </group>
 
-        <Suspense fallback={<CaseBox position={[0,1,0]} args={[3, 2, 1]} color='lightblue'/>}>
+        <Suspense fallback={null}>
           <KeyCap/>
-          <CaseBox position={[-2,1,-5]} args={[1,1,1]} color='pink'/>
-          <CaseBox position={[5,1,-2]} args={[1,1,1]} color='green'/>
         </Suspense>
-
 
       </Canvas>
     </>
