@@ -1,9 +1,9 @@
 import React from 'react';
-import {useRef, Suspense} from 'react';
+import {Suspense} from 'react';
 import './App.scss';
 import {Canvas} from '@react-three/fiber';
-import KeyCap from './KeyCap';
-import {animated} from '@react-spring/three';
+import KeyCap from './KeyCap.js';
+import Controls from './Controls.js';
 
 function App() {
 
@@ -14,6 +14,7 @@ function App() {
         shadows
         camera={{position: [-5, 10, 10], fov: 60}}
       >
+        <Controls/>
         <ambientLight intensity={0.3}/>
         <pointLight position={[-10,0,-20]} intensity={0.5}/>
         <pointLight position={[0,-10,0]} intensity={1.5}/>
@@ -34,6 +35,7 @@ function App() {
           <mesh receiveShadow rotation={[-Math.PI/2,0,0]} position={[0,-3,0]}>
             <planeBufferGeometry attach='geometry' args={[100,100]}/>
             <shadowMaterial attach='material' opacity={0.3}/>
+            <meshPhysicalMaterial attach="material" color="#eba4f7" />
           </mesh>
         </group>
 
